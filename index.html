@@ -294,6 +294,14 @@
     .drink-photo-grid{grid-template-columns:1fr 1fr;}
     .payment-card{grid-template-columns:1fr;}
   }
+
+  .link-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:10px; margin-top:16px;}
+  .ext-link{
+    display:flex; align-items:center; gap:10px; padding:11px 14px; border-radius:12px;
+    background:rgba(255,255,255,0.08); color:#fff; text-decoration:none; font-weight:700; font-size:13.5px;
+    border:1px solid rgba(255,255,255,0.15); transition:.2s;
+  }
+  .ext-link:hover{background:rgba(255,255,255,0.16);}
 </style>
 </head>
 <body>
@@ -464,6 +472,14 @@
         <div class="contact-row"><div class="ic">💬</div><div>0812 8631 1004</div></div>
         <div class="contact-row"><div class="ic">🕐</div><div>Buka setiap hari, sore hingga malam</div></div>
         <a class="wa-btn" href="https://wa.me/6281286311004" target="_blank" rel="noopener">💬 Chat via WhatsApp</a>
+
+        <div class="link-grid">
+          <a class="ext-link" href="https://shopee.co.id/universal-link/now-food/shop/23184731?deep_and_deferred=1&shareChannel=whatsapp" target="_blank" rel="noopener">🛍️ Pesan di ShopeeFood</a>
+          <a class="ext-link" href="https://gofood.link/a/H9Twuwu" target="_blank" rel="noopener">🛵 Pesan di GoFood</a>
+          <a class="ext-link" href="https://maps.app.goo.gl/DR1scuaXNXqh7vGW8?g_st=aw" target="_blank" rel="noopener">📍 Lihat di Google Maps</a>
+          <a class="ext-link" href="https://www.tiktok.com/@takoyakiboezan" target="_blank" rel="noopener">🎵 TikTok @takoyakiboezan</a>
+          <a class="ext-link" href="https://youtube.com/@takoyakiboezan" target="_blank" rel="noopener">▶️ YouTube @takoyakiboezan</a>
+        </div>
       </div>
     </div>
   </div>
