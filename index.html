@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Takoyaki Boezan — Sejak 2023</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Caveat:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1B1410;
+    --cream:#FFF4DC;
+    --paper:#FFFFFF;
+    --yellow:#FFC83D;
+    --orange:#E86A17;
+    --orange-deep:#C1500C;
+    --red:#C81E1E;
+    --orange-soft:#FBDDB8;
+    --line: rgba(27,20,16,0.12);
+    --shadow: 0 10px 30px rgba(27,20,16,0.12);
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--cream);
+    color:var(--ink);
+    font-family:'Plus Jakarta Sans', sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,.display{
+    font-family:'Baloo 2', sans-serif;
+    margin:0;
+  }
+  .script{
+    font-family:'Caveat', cursive;
+  }
+  a{color:inherit;}
+  button{font-family:inherit;}
+  img{max-width:100%;display:block;}
+
+  /* ---------- Header ---------- */
+  header{
+    position:sticky; top:0; z-index:50;
+    background:var(--ink);
+    color:var(--cream);
+    border-bottom:3px solid var(--orange);
+  }
+  .nav-wrap{
+    max-width:1160px; margin:0 auto;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:14px 24px;
+  }
+  .brand{display:flex; align-items:center; gap:12px;}
+  .brand-badge{
+    width:46px; height:46px; border-radius:50%;
+    background:radial-gradient(circle at 35% 30%, #2a1f18, var(--ink) 70%);
+    border:2px solid var(--orange);
+    display:flex; align-items:center; justify-content:center;
+    font-size:20px;
+  }
+  .brand-text{line-height:1.05;}
+  .brand-text .t1{font-family:'Caveat', cursive; font-size:15px; color:var(--yellow); font-weight:700;}
+  .brand-text .t2{font-family:'Baloo 2', sans-serif; font-size:19px; font-weight:800; color:#fff; letter-spacing:0.5px;}
+  nav{display:flex; gap:4px; align-items:center;}
+  .nav-btn{
+    background:none; border:none; color:var(--cream); opacity:0.8;
+    font-weight:600; font-size:14.5px; padding:9px 14px; border-radius:999px;
+    cursor:pointer; transition:.2s;
+  }
+  .nav-btn:hover{opacity:1; background:rgba(255,255,255,0.08);}
+  .nav-btn.active{opacity:1; background:var(--orange); color:#fff;}
+  .member-chip{
+    display:flex; align-items:center; gap:8px;
+    background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.18);
+    padding:6px 12px 6px 6px; border-radius:999px; font-size:13.5px; font-weight:600;
+  }
+  .member-chip .dot{width:8px;height:8px;border-radius:50%; background:#5ed48a;}
+  .member-chip button{
+    background:none; border:none; color:var(--yellow); font-weight:700; cursor:pointer; font-size:13px;
+  }
+
+  /* ---------- Page sections ---------- */
+  .page{display:none; animation:fadeIn .35s ease;}
+  .page.active{display:block;}
+  @keyframes fadeIn{from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:none;}}
+
+  /* ---------- Hero ---------- */
+  .hero{
+    max-width:1160px; margin:0 auto; padding:64px 24px 40px;
+    display:grid; grid-template-columns:1.15fr 0.85fr; gap:48px; align-items:center;
+  }
+  .eyebrow{
+    display:inline-flex; align-items:center; gap:8px;
+    background:var(--orange-soft); color:var(--orange-deep);
+    font-weight:700; font-size:13px; padding:6px 14px; border-radius:999px;
+    margin-bottom:18px;
+  }
+  .hero h1{font-size:44px; line-height:1.12; font-weight:800; letter-spacing:-0.5px;}
+  .hero h1 span{color:var(--orange);}
+  .hero p.lead{font-size:16.5px; line-height:1.6; color:#4a3d33; margin:18px 0 28px; max-width:480px;}
+  .cta-row{display:flex; gap:12px; flex-wrap:wrap;}
+  .btn{
+    display:inline-flex; align-items:center; gap:8px;
+    padding:13px 24px; border-radius:12px; font-weight:700; font-size:15px;
+    cursor:pointer; border:none; transition:.2s; text-decoration:none;
+  }
+  .btn-primary{background:var(--orange); color:#fff; box-shadow:0 6px 16px rgba(232,106,23,0.35);}
+  .btn-primary:hover{background:var(--orange-deep); transform:translateY(-1px);}
+  .btn-outline{background:transparent; border:2px solid var(--ink); color:var(--ink);}
+  .btn-outline:hover{background:var(--ink); color:#fff;}
+
+  .hero-visual{position:relative; display:flex; justify-content:center;}
+  .badge-plate{
+    position:relative; width:320px; height:320px; border-radius:50%;
+    background:conic-gradient(from 200deg, #241a13, var(--ink) 60%, #241a13);
+    border:6px solid var(--yellow);
+    display:flex; align-items:center; justify-content:center;
+    box-shadow:var(--shadow);
+  }
+  .ball{
+    width:150px; height:150px; border-radius:50%;
+    background:radial-gradient(circle at 38% 32%, #f6b654, #d67d1e 65%, #a85c10);
+    position:relative; box-shadow:inset 0 -12px 18px rgba(0,0,0,0.25);
+  }
+  .ball::before{ /* sauce drizzle */
+    content:"";
+    position:absolute; top:8%; left:6%; width:88%; height:55%;
+    background:linear-gradient(180deg, #5a2e18, #3c1c0e);
+    clip-path: path('M10 40 C 30 5, 55 5, 75 30 S 130 55, 140 20 L 140 0 L 0 0 Z');
+    border-radius:50% 50% 40% 40% / 60% 60% 30% 30%;
+    opacity:0.95;
+  }
+  .steam{position:absolute; top:-58px; left:50%; transform:translateX(-50%); display:flex; gap:10px;}
+  .steam span{
+    width:6px; height:46px; border-radius:6px;
+    background:linear-gradient(180deg, rgba(255,244,220,0), rgba(255,244,220,0.85));
+    animation:rise 2.6s ease-in-out infinite;
+  }
+  .steam span:nth-child(2){animation-delay:.4s; height:56px;}
+  .steam span:nth-child(3){animation-delay:.8s;}
+  @keyframes rise{
+    0%{transform:translateY(0) scaleY(1); opacity:0;}
+    30%{opacity:1;}
+    100%{transform:translateY(-26px) scaleY(1.3); opacity:0;}
+  }
+  .tentacle{position:absolute; width:70px; opacity:0.9;}
+  .tentacle.left{left:-6px; top:36%; transform:rotate(-12deg) scaleX(-1);}
+  .tentacle.right{right:-6px; top:36%; transform:rotate(12deg);}
+  @media (prefers-reduced-motion: reduce){
+    .steam span{animation:none; opacity:0.6;}
+  }
+
+  /* ---------- Divider ---------- */
+  .tentacle-divider{height:34px; margin:8px 0 0;}
+
+  /* ---------- Auth section ---------- */
+  .auth-wrap{
+    max-width:1160px; margin:8px auto 60px; padding:0 24px;
+  }
+  .auth-card{
+    background:var(--paper); border-radius:20px; box-shadow:var(--shadow);
+    border:1px solid var(--line);
+    display:grid; grid-template-columns:1fr 1.3fr; overflow:hidden;
+  }
+  .auth-side{
+    background:linear-gradient(160deg, var(--ink), #2b1f16);
+    color:var(--cream); padding:36px 32px; position:relative; overflow:hidden;
+  }
+  .auth-side h3{font-size:22px; color:#fff; margin-bottom:10px;}
+  .auth-side p{font-size:14px; line-height:1.6; color:#e8d9c4; max-width:280px;}
+  .auth-side .tag{
+    position:absolute; bottom:-10px; right:-10px; font-family:'Caveat',cursive;
+    font-size:70px; color:rgba(255,200,61,0.14); font-weight:700;
+  }
+  .auth-main{padding:32px 36px;}
+  .tabs{display:flex; gap:6px; margin-bottom:22px; background:var(--cream); padding:5px; border-radius:12px; width:fit-content;}
+  .tab-btn{
+    border:none; background:none; padding:9px 18px; border-radius:9px;
+    font-weight:700; font-size:13.5px; color:#7a6a58; cursor:pointer; transition:.2s;
+  }
+  .tab-btn.active{background:var(--orange); color:#fff;}
+  .form-view{display:none;}
+  .form-view.active{display:block; animation:fadeIn .3s ease;}
+  .field{margin-bottom:14px;}
+  .field label{display:block; font-size:13px; font-weight:700; margin-bottom:6px; color:#5a4a3c;}
+  .field input{
+    width:100%; padding:11px 14px; border-radius:10px; border:1.5px solid var(--line);
+    font-size:14.5px; font-family:inherit; background:#fffaf0; transition:.2s;
+  }
+  .field input:focus{outline:none; border-color:var(--orange); background:#fff;}
+  .form-msg{font-size:13px; font-weight:600; margin:10px 0; min-height:18px;}
+  .form-msg.err{color:var(--red);}
+  .form-msg.ok{color:#1f8a4c;}
+  .guest-line{
+    margin-top:18px; padding-top:18px; border-top:1px dashed var(--line);
+    display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap;
+  }
+  .guest-line span{font-size:13.5px; color:#6b5c4c;}
+
+  .welcome-panel{
+    background:var(--paper); border-radius:20px; box-shadow:var(--shadow); border:1px solid var(--line);
+    padding:32px 36px; display:flex; align-items:center; justify-content:space-between; gap:24px; flex-wrap:wrap;
+  }
+  .welcome-panel h3{font-size:22px;}
+  .welcome-panel p{color:#6b5c4c; font-size:14px; margin-top:6px;}
+
+  /* ---------- Section shell ---------- */
+  .section{max-width:1160px; margin:0 auto; padding:56px 24px;}
+  .section-head{margin-bottom:32px; text-align:center;}
+  .section-head .eyebrow{margin-bottom:12px;}
+  .section-head h2{font-size:32px; font-weight:800;}
+  .section-head p{color:#6b5c4c; margin-top:10px; font-size:15px;}
+
+  /* ---------- Menu ---------- */
+  .size-tier{margin-bottom:36px;}
+  .size-tier-head{display:flex; align-items:baseline; gap:12px; margin-bottom:16px;}
+  .size-tier-head h3{font-size:22px; color:var(--orange-deep);}
+  .size-tier-head span{font-size:13.5px; color:#8a7967; font-weight:600;}
+  .menu-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:14px;}
+  .menu-card{
+    background:var(--paper); border:1px solid var(--line); border-radius:14px;
+    padding:18px 20px; box-shadow:0 4px 14px rgba(27,20,16,0.06); transition:.2s;
+  }
+  .menu-card:hover{transform:translateY(-3px); box-shadow:var(--shadow);}
+  .menu-card .name{font-weight:700; font-size:14.5px; margin-bottom:6px;}
+  .menu-card .price{color:var(--red); font-family:'Baloo 2',sans-serif; font-size:20px; font-weight:700;}
+  .drinks-strip{
+    background:var(--yellow); border-radius:16px; padding:24px 28px; margin-top:12px;
+    display:flex; flex-wrap:wrap; gap:18px; justify-content:space-between; align-items:center;
+  }
+  .drinks-strip h3{font-size:18px;}
+  .drink-list{display:flex; gap:22px; flex-wrap:wrap;}
+  .drink-item{font-size:14px; font-weight:700;}
+  .drink-item small{display:block; font-weight:600; color:#5a4a1f; font-size:12px;}
+
+  /* ---------- About / contact ---------- */
+  .about-grid{display:grid; grid-template-columns:1fr 1fr; gap:40px; align-items:start;}
+  .about-grid p{line-height:1.75; color:#4a3d33; font-size:15px; margin-bottom:14px;}
+  .contact-card{
+    background:var(--ink); color:var(--cream); border-radius:18px; padding:28px;
+  }
+  .contact-card h3{color:#fff; font-size:19px; margin-bottom:16px;}
+  .contact-row{display:flex; gap:12px; align-items:flex-start; margin-bottom:14px; font-size:14px;}
+  .contact-row .ic{
+    width:34px; height:34px; border-radius:9px; background:var(--orange);
+    display:flex; align-items:center; justify-content:center; flex-shrink:0; font-size:16px;
+  }
+  .wa-btn{
+    margin-top:10px; display:inline-flex; align-items:center; gap:8px;
+    background:#25D366; color:#fff; padding:12px 20px; border-radius:12px;
+    font-weight:700; text-decoration:none; font-size:14.5px;
+  }
+
+  footer{
+    background:var(--red); color:#fff; text-align:center; padding:18px; font-size:13px; font-weight:600;
+  }
+
+  @media (max-width:860px){
+    .hero{grid-template-columns:1fr; padding-top:36px;}
+    .hero-visual{order:-1;}
+    .auth-card{grid-template-columns:1fr;}
+    .auth-side{padding:26px;}
+    .menu-grid{grid-template-columns:1fr 1fr;}
+    .about-grid{grid-template-columns:1fr;}
+    nav{display:none;}
+  }
+  @media (max-width:520px){
+    .hero h1{font-size:32px;}
+    .menu-grid{grid-template-columns:1fr;}
+  }
+
+  /* ---------- Gallery & payment ---------- */
+  .gallery-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin-top:8px;}
+  .gallery-grid img{width:100%; height:190px; object-fit:cover; border-radius:14px; box-shadow:0 4px 14px rgba(27,20,16,0.12);}
+  .drink-photo-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin-top:14px;}
+  .drink-photo-card{background:var(--paper); border-radius:14px; overflow:hidden; border:1px solid var(--line); box-shadow:0 4px 14px rgba(27,20,16,0.06);}
+  .drink-photo-card img{width:100%; height:160px; object-fit:cover; display:block;}
+  .drink-photo-card .dp-label{padding:10px 14px; font-weight:700; font-size:13.5px;}
+  .payment-card{
+    display:grid; grid-template-columns:220px 1fr; gap:28px; align-items:center;
+    background:var(--paper); border:1px solid var(--line); border-radius:18px; padding:24px; margin-top:14px;
+    box-shadow:var(--shadow);
+  }
+  .payment-card img{width:100%; border-radius:12px; border:1px solid var(--line);}
+  .payment-card h3{font-size:19px; margin-bottom:8px;}
+  .payment-card p{color:#6b5c4c; font-size:14px; line-height:1.6; margin-bottom:4px;}
+  .payment-card .nmid{
+    display:inline-block; margin-top:8px; background:var(--orange-soft); color:var(--orange-deep);
+    font-weight:700; font-size:12.5px; padding:5px 12px; border-radius:999px;
+  }
+  @media (max-width:700px){
+    .gallery-grid{grid-template-columns:1fr 1fr;}
+    .drink-photo-grid{grid-template-columns:1fr 1fr;}
+    .payment-card{grid-template-columns:1fr;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="nav-wrap">
+    <div class="brand">
+      <div class="brand-badge"><img src="logo.jpg" alt="Logo Takoyaki Boezan" style="width:100%;height:100%;object-fit:cover;border-radius:50%;"></div>
+      <div class="brand-text">
+        <div class="t1">Takoyaki</div>
+        <div class="t2">BOEZAN</div>
+      </div>
+    </div>
+    <nav>
+      <button class="nav-btn active" data-page="beranda">Beranda</button>
+      <button class="nav-btn" data-page="menu">Menu</button>
+      <button class="nav-btn" data-page="kontak">Tentang &amp; Kontak</button>
+    </nav>
+
+  </div>
+</header>
+
+<!-- ===================== BERANDA ===================== -->
+<section class="page active" id="page-beranda">
+  <div class="hero">
+    <div>
+      <div class="eyebrow">🔥 Sejak 2023 · Ciberem, Bedahan</div>
+      <h1>Takoyaki panas, saus melimpah,<br><span>digulung langsung</span> di depan kamu.</h1>
+      <p class="lead">Bola-bola takoyaki gurih dengan isian pilihan — sosis, bakso, crabstik, keju, sampai cumi &amp; gurita asli. Disiram saus dan mayo hangat, siap disantap dari warung kami di Ciberem.</p>
+      <div class="cta-row">
+        <button class="btn btn-primary" onclick="goPage('menu')">Lihat Menu &amp; Harga →</button>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="badge-plate" style="background:none;border:none;box-shadow:none;">
+        <img src="logo.jpg" alt="Logo Takoyaki Boezan" style="width:100%;height:100%;object-fit:contain;border-radius:50%;filter:drop-shadow(0 14px 24px rgba(27,20,16,0.28));">
+      </div>
+    </div>
+  </div>
+
+
+  <div class="section" style="padding-top:0;">
+    <div class="section-head">
+      <div class="eyebrow" style="display:inline-flex;">Kenapa Boezan</div>
+      <h2>Dibuat fresh, langsung dari wajan panas</h2>
+    </div>
+    <div class="menu-grid" style="grid-template-columns:repeat(3,1fr);">
+      <div class="menu-card"><div class="name">🍢 Isian Lengkap</div><div style="font-size:13.5px;color:#6b5c4c;margin-top:4px;">Sosis, bakso, crabstik, keju, cumi, sampai gurita asli — pilih sesuai selera.</div></div>
+      <div class="menu-card"><div class="name">🌶️ Saus Racikan</div><div style="font-size:13.5px;color:#6b5c4c;margin-top:4px;">Saus takoyaki dan mayo disiram langsung selagi panas, gurihnya nendang.</div></div>
+      <div class="menu-card"><div class="name">📍 Warung Rumahan</div><div style="font-size:13.5px;color:#6b5c4c;margin-top:4px;">Dari warung kecil di Ciberem, dibuat dengan resep konsisten sejak 2023.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== MENU ===================== -->
+<section class="page" id="page-menu">
+  <div class="section">
+    <div class="section-head">
+      <div class="eyebrow" style="display:inline-flex;">Price List</div>
+      <h2>Menu Takoyaki Boezan</h2>
+      <p>Semua ukuran bisa pilih isian favoritmu. Harga sudah termasuk saus &amp; topping standar.</p>
+    </div>
+
+    <div class="size-tier">
+      <div class="size-tier-head"><h3>Small</h3><span>isi 4 pcs</span></div>
+      <div class="menu-grid">
+        <div class="menu-card"><div class="name">Sosis / Bakso / Crabstik / Keju</div><div class="price">Rp10.000</div></div>
+        <div class="menu-card"><div class="name">Cumi / Gurita</div><div class="price">Rp12.000</div></div>
+        <div class="menu-card"><div class="name">Mix</div><div class="price">Rp11.000</div></div>
+      </div>
+    </div>
+
+    <div class="size-tier">
+      <div class="size-tier-head"><h3>Medium</h3><span>isi 6 pcs</span></div>
+      <div class="menu-grid">
+        <div class="menu-card"><div class="name">Sosis / Bakso / Crabstik / Keju</div><div class="price">Rp15.000</div></div>
+        <div class="menu-card"><div class="name">Cumi / Gurita</div><div class="price">Rp18.000</div></div>
+        <div class="menu-card"><div class="name">Mix</div><div class="price">Rp16.000</div></div>
+      </div>
+    </div>
+
+    <div class="size-tier">
+      <div class="size-tier-head"><h3>Large</h3><span>isi 8 pcs</span></div>
+      <div class="menu-grid">
+        <div class="menu-card"><div class="name">Sosis / Bakso / Crabstik / Keju</div><div class="price">Rp20.000</div></div>
+        <div class="menu-card"><div class="name">Cumi / Gurita</div><div class="price">Rp24.000</div></div>
+        <div class="menu-card"><div class="name">Mix</div><div class="price">Rp22.000</div></div>
+      </div>
+    </div>
+
+    <div class="drinks-strip">
+      <h3>🥤 Tersedia juga</h3>
+      <div class="drink-list">
+        <div class="drink-item">Es Teh<small>Reguler Rp3.000 · Jumbo Rp5.000</small></div>
+        <div class="drink-item">Jeruk Peras<small>Rp5.000</small></div>
+        <div class="drink-item">Susu Jely Kurma<small>Rp5.000</small></div>
+      </div>
+    </div>
+
+    <div style="margin-top:44px;">
+      <div class="section-head" style="text-align:left; margin-bottom:16px;">
+        <h2 style="font-size:24px;">📸 Galeri Takoyaki</h2>
+      </div>
+      <div class="gallery-grid">
+        <img src="food_a.jpg" alt="Takoyaki Boezan isi 4 pcs dengan topping bonito dan saus">
+        <img src="food_b.jpg" alt="Takoyaki Boezan disiram saus dan mayo">
+        <img src="food_c.jpg" alt="Beberapa box takoyaki Boezan siap disajikan">
+      </div>
+    </div>
+
+    <div style="margin-top:44px;">
+      <div class="section-head" style="text-align:left; margin-bottom:16px;">
+        <h2 style="font-size:24px;">🥤 Foto Minuman</h2>
+      </div>
+      <div class="drink-photo-grid">
+        <div class="drink-photo-card">
+          <img src="drink_orange.jpg" alt="Jeruk Peras Takoyaki Boezan">
+          <div class="dp-label">Jeruk Peras — Rp5.000</div>
+        </div>
+        <div class="drink-photo-card">
+          <img src="drink_purple.jpg" alt="Susu Jely Kurma Takoyaki Boezan">
+          <div class="dp-label">Susu Jely Kurma — Rp5.000</div>
+        </div>
+        <div class="drink-photo-card">
+          <img src="drink_green.jpg" alt="Green Tea Takoyaki Boezan">
+          <div class="dp-label">Green Tea — Rp3.000 / Rp5.000</div>
+        </div>
+        <div class="drink-photo-card">
+          <img src="es_teh.jpg" alt="Es Teh Takoyaki Boezan">
+          <div class="dp-label">Es Teh — Reguler Rp3.000 / Jumbo Rp5.000</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:44px;">
+      <div class="section-head" style="text-align:left; margin-bottom:0;">
+        <h2 style="font-size:24px;">💳 Metode Pembayaran</h2>
+      </div>
+      <div class="payment-card">
+        <img src="qris.jpg" alt="Kode QRIS Takoyaki Boezan">
+        <div>
+          <h3>Bayar Praktis dengan QRIS</h3>
+          <p>Scan kode QRIS di samping pakai aplikasi bank atau e-wallet apa saja (GoPay, OVO, Dana, ShopeePay, m-banking, dll) — satu QR untuk semua metode.</p>
+          <p>Bisa juga bayar tunai langsung di tempat.</p>
+          <span class="nmid">NMID: ID1023255391782</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== KONTAK ===================== -->
+<section class="page" id="page-kontak">
+  <div class="section">
+    <div class="section-head">
+      <div class="eyebrow" style="display:inline-flex;">Tentang Kami</div>
+      <h2>Cerita Takoyaki Boezan</h2>
+    </div>
+    <div class="about-grid">
+      <div>
+        <p>Takoyaki Boezan berdiri sejak 2023 dari warung rumahan di Ciberem, Grumbul Bedahan. Berawal dari kecintaan pada jajanan Jepang yang gurih dan hangat, kami meracik takoyaki dengan isian yang bisa disesuaikan — mulai dari sosis dan bakso yang ramah di kantong, sampai cumi dan gurita asli untuk yang mau rasa laut yang lebih kuat.</p>
+        <p>Setiap pesanan dibuat langsung di atas wajan panas, digulung satu per satu, lalu disiram saus dan mayo selagi masih mengepul. Kami percaya jajanan sederhana bisa terasa istimewa kalau dibuat dengan bahan segar dan porsi yang pas.</p>
+        <p>Pesan langsung datang ke warung atau hubungi kami lewat WhatsApp — kami layani dengan senang hati.</p>
+      </div>
+      <div class="contact-card">
+        <h3>Hubungi &amp; Kunjungi Kami</h3>
+        <div class="contact-row"><div class="ic">📍</div><div>Ds. Ciberem – Grumbul Bedahan<br>Rt. 01 / Rw. 02</div></div>
+        <div class="contact-row"><div class="ic">💬</div><div>0812 8631 1004</div></div>
+        <div class="contact-row"><div class="ic">🕐</div><div>Buka setiap hari, sore hingga malam</div></div>
+        <a class="wa-btn" href="https://wa.me/6281286311004" target="_blank" rel="noopener">💬 Chat via WhatsApp</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>Takoyaki Boezan · Since 2023 · Ds. Ciberem, Grumbul Bedahan</footer>
+
+<script>
+  // ---------- Navigation ----------
+  function goPage(id){
+    document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+    document.getElementById('page-'+id).classList.add('active');
+    document.querySelectorAll('.nav-btn').forEach(b=>b.classList.toggle('active', b.dataset.page===id));
+    window.scrollTo({top:0, behavior:'smooth'});
+  }
+  document.querySelectorAll('.nav-btn').forEach(b=>{
+    b.addEventListener('click', ()=>goPage(b.dataset.page));
+  });
+
+</script>
+
+</body>
+</html>
