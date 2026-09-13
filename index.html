@@ -163,9 +163,9 @@
     display:flex; align-items:center; justify-content:center; flex-shrink:0; font-size:16px;
   }
   .wa-btn{
-    margin-top:10px; display:inline-flex; align-items:center; gap:8px;
+    margin-top:14px; display:inline-flex; align-items:center; gap:8px;
     background:#25D366; color:#fff; padding:12px 20px; border-radius:12px;
-    font-weight:700; text-decoration:none; font-size:14.5px;
+    font-weight:700; text-decoration:none; font-size:14.5px; width:100%; justify-content:center;
   }
 
   footer{
@@ -224,7 +224,6 @@
 
 <header>
   <div class="nav-wrap">
-    <!-- Logo dengan onclick kembali ke beranda -->
     <div class="brand" onclick="goPage('beranda')">
       <div class="brand-badge"><img src="logo.jpg" alt="Logo Takoyaki Boezan" style="width:100%;height:100%;object-fit:cover;border-radius:50%;"></div>
       <div class="brand-text">
@@ -236,6 +235,7 @@
       <button class="nav-btn active" data-page="beranda">Beranda</button>
       <button class="nav-btn" data-page="menu">Menu</button>
       <button class="nav-btn" data-page="kontak">Tentang &amp; Kontak</button>
+      <button class="nav-btn" onclick="openMemberModal()">👤 Member</button>
     </nav>
   </div>
 </header>
@@ -381,36 +381,38 @@
         <p>Setiap pesanan dibuat langsung di atas wajan panas, digulung satu per satu, lalu disiram saus dan mayo selagi masih mengepul. Kami percaya jajanan sederhana bisa terasa istimewa kalau dibuat dengan bahan segar dan porsi yang pas.</p>
         <p>Pesan langsung datang ke warung atau hubungi kami lewat WhatsApp — kami layani dengan senang hati.</p>
       </div>
+      
       <div class="contact-card">
         <h3>Hubungi &amp; Kunjungi Kami</h3>
         <div class="contact-row"><div class="ic">📍</div><div>Ds. Ciberem – Grumbul Bedahan<br>Rt. 01 / Rw. 02</div></div>
         <div class="contact-row"><div class="ic">💬</div><div>0812 8631 1004</div></div>
         <div class="contact-row"><div class="ic">🕐</div><div>Buka setiap hari, sore hingga malam</div></div>
         
-        <!-- Bagian Medsos & Layanan Lengkap -->
-        <div style="margin-top: 18px; padding-top: 14px; border-top: 1px solid rgba(255,255,255,0.15);">
-          <div style="font-size: 13px; font-weight: 700; color: var(--yellow); margin-bottom: 8px;">Ikuti Medsos &amp; Order Online:</div>
-          <div style="display: flex; gap: 6px; flex-wrap: wrap;">
-            <a href="https://instagram.com/takoyakiboezan" target="_blank" rel="noopener" style="display: inline-flex; align-items: center; gap: 4px; background: rgba(255,255,255,0.1); color: #fff; padding: 6px 10px; border-radius: 6px; text-decoration: none; font-size: 11.5px; font-weight: 600;">
+        <!-- Tombol Medsos & Layanan Lengkap yang Pas di HP -->
+        <div style="margin-top: 16px; padding-top: 12px; border-top: 1px solid rgba(255,255,255,0.15);">
+          <div style="font-size: 12.5px; font-weight: 700; color: var(--yellow); margin-bottom: 8px;">Ikuti Medsos &amp; Order Online:</div>
+          <div style="display: flex; gap: 5px; flex-wrap: wrap;">
+            <a href="https://instagram.com/takoyakiboezan" target="_blank" rel="noopener" style="display: inline-flex; align-items: center; gap: 4px; background: rgba(255,255,255,0.1); color: #fff; padding: 6px 9px; border-radius: 6px; text-decoration: none; font-size: 11px; font-weight: 600;">
               📷 IG
             </a>
-            <a href="https://tiktok.com/@takoyakiboezan" target="_blank" rel="noopener" style="display: inline-flex; align-items: center; gap: 4px; background: rgba(255,255,255,0.1); color: #fff; padding: 6px 10px; border-radius: 6px; text-decoration: none; font-size: 11.5px; font-weight: 600;">
+            <a href="https://tiktok.com/@takoyakiboezan" target="_blank" rel="noopener" style="display: inline-flex; align-items: center; gap: 4px; background: rgba(255,255,255,0.1); color: #fff; padding: 6px 9px; border-radius: 6px; text-decoration: none; font-size: 11px; font-weight: 600;">
               🎵 TikTok
             </a>
-            <a href="https://youtube.com/@takoyakiboezan" target="_blank" rel="noopener" style="display: inline-flex; align-items: center; gap: 4px; background: rgba(255,255,255,0.1); color: #fff; padding: 6px 10px; border-radius: 6px; text-decoration: none; font-size: 11.5px; font-weight: 600;">
+            <a href="https://youtube.com/@takoyakiboezan" target="_blank" rel="noopener" style="display: inline-flex; align-items: center; gap: 4px; background: rgba(255,255,255,0.1); color: #fff; padding: 6px 9px; border-radius: 6px; text-decoration: none; font-size: 11px; font-weight: 600;">
               ▶️ YouTube
             </a>
-            <a href="https://shopee.co.id/" target="_blank" rel="noopener" style="display: inline-flex; align-items: center; gap: 4px; background: #EE4D2D; color: #fff; padding: 6px 10px; border-radius: 6px; text-decoration: none; font-size: 11.5px; font-weight: 600;">
+            <a href="https://shopee.co.id/" target="_blank" rel="noopener" style="display: inline-flex; align-items: center; gap: 4px; background: #EE4D2D; color: #fff; padding: 6px 9px; border-radius: 6px; text-decoration: none; font-size: 11px; font-weight: 600;">
               🧡 Shopee
             </a>
-            <a href="https://gofood.co.id/" target="_blank" rel="noopener" style="display: inline-flex; align-items: center; gap: 4px; background: #00880C; color: #fff; padding: 6px 10px; border-radius: 6px; text-decoration: none; font-size: 11.5px; font-weight: 600;">
+            <a href="https://gofood.co.id/" target="_blank" rel="noopener" style="display: inline-flex; align-items: center; gap: 4px; background: #00880C; color: #fff; padding: 6px 9px; border-radius: 6px; text-decoration: none; font-size: 11px; font-weight: 600;">
               🟢 GoFood
             </a>
           </div>
         </div>
 
-        <a class="wa-btn" href="https://wa.me/6281286311004" target="_blank" rel="noopener" style="margin-top: 16px;">💬 Chat via WhatsApp</a>
+        <a class="wa-btn" href="https://wa.me/6281286311004" target="_blank" rel="noopener">💬 Chat via WhatsApp</a>
       </div>
+
     </div>
   </div>
 </section>
