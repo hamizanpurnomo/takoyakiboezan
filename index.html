@@ -419,6 +419,33 @@
 
 <footer>Takoyaki Boezan · Since 2023 · Ds. Ciberem, Grumbul Bedahan</footer>
 
+<!-- Modal Member Login & Register -->
+<div id="memberModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.65); z-index:100; align-items:center; justify-content:center; backdrop-filter:blur(3px);">
+  <div style="background:var(--paper); padding:28px 24px; border-radius:18px; width:90%; max-width:340px; text-align:center; position:relative; box-shadow:var(--shadow); border:2px solid var(--orange);">
+    <button onclick="closeMemberModal()" style="position:absolute; top:12px; right:14px; border:none; background:none; font-size:20px; cursor:pointer; color:#7a6a58;">✕</button>
+    
+    <h3 id="modalTitle" style="margin-bottom:6px; color:var(--ink); font-size:22px;">Login Member</h3>
+    <p style="font-size:13px; color:#6b5c4c; margin-bottom:18px;">Dapatkan keuntungan &amp; diskon khusus member Boezan!</p>
+    
+    <div style="text-align:left; margin-bottom:12px;">
+      <label style="font-size:12px; font-weight:700; color:#5a4a3c; display:block; margin-bottom:4px;">Username</label>
+      <input type="text" id="memberUser" placeholder="Masukkan username" style="width:100%; padding:10px 12px; border-radius:8px; border:1.5px solid var(--line); font-size:14px; background:#fffaf0;">
+    </div>
+    
+    <div style="text-align:left; margin-bottom:18px;">
+      <label style="font-size:12px; font-weight:700; color:#5a4a3c; display:block; margin-bottom:4px;">Password</label>
+      <input type="password" id="memberPass" placeholder="Masukkan password" style="width:100%; padding:10px 12px; border-radius:8px; border:1.5px solid var(--line); font-size:14px; background:#fffaf0;">
+    </div>
+    
+    <button onclick="handleAuth()" id="authBtn" class="btn btn-primary" style="width:100%; justify-content:center; padding:11px;">Masuk Sekarang</button>
+    
+    <div style="font-size:12.5px; margin-top:16px; color:#6b5c4c;">
+      <span id="switchText">Belum punya akun?</span> 
+      <a href="javascript:void(0)" onclick="toggleAuthMode()" id="switchBtn" style="color:var(--orange); font-weight:700; text-decoration:none; margin-left:4px;">Daftar Member</a>
+    </div>
+  </div>
+</div>
+
 <script>
   // ---------- Navigation ----------
   function goPage(id){
@@ -428,8 +455,68 @@
     window.scrollTo({top:0, behavior:'smooth'});
   }
   document.querySelectorAll('.nav-btn').forEach(b=>{
-    b.addEventListener('click', ()=>goPage(b.dataset.page));
+    b.addEventListener('click', ()=>{
+      if(b.dataset.page) goPage(b.dataset.page);
+    });
   });
+
+  // ---------- Logika Member (LocalStorage) ----------
+  let isRegisterMode = false;
+
+  function openMemberModal() {
+    document.getElementById('memberModal').style.display = 'flex';
+  }
+
+  function closeMemberModal() {
+    document.getElementById('memberModal').style.display = 'none';
+  }
+
+  function toggleAuthMode() {
+    isRegisterMode = !isRegisterMode;
+    document.getElementById('modalTitle').innerText = isRegisterMode ? "Daftar Member Baru" : "Login Member Boezan";
+    document.getElementById('authBtn').innerText = isRegisterMode ? "Daftar Sekarang" : "Masuk Sekarang";
+    document.getElementById('switchText').innerText = isRegisterMode ? "Sudah punya akun?" : "Belum punya akun?";
+    document.getElementById('switchBtn').innerText = isRegisterMode ? "Login" : "Daftar Member";
+  }
+
+  function handleAuth() {
+    const user = document.getElementById('memberUser').value.trim();
+    const pass = document.getElementById('memberPass').value.trim();
+
+    if (!user || !pass) {
+      alert("Mohon isi username dan password!");
+      return;
+    }
+
+    if (isRegisterMode) {
+      // Simpan data pendaftaran ke LocalStorage
+      localStorage.setItem('boezan_user_' + user, pass);
+      alert("Pendaftaran berhasil! Silakan login dengan akun kamu.");
+      toggleAuthMode();
+    } else {
+      // Verifikasi Login dari LocalStorage
+      const savedPass = localStorage.getItem('boezan_user_' + user);
+      if (savedPass && savedPass === pass) {
+        localStorage.setItem('boezan_active_user', user);
+        alert("Selamat datang kembali, " + user + "!");
+        closeMemberModal();
+        checkActiveUser();
+      } else {
+        alert("Username atau Password salah / belum terdaftar!");
+      }
+    }
+  }
+
+  function checkActiveUser() {
+    const activeUser = localStorage.getItem('boezan_active_user');
+    const memberBtn = document.querySelector('button[onclick="openMemberModal()"]');
+    if (activeUser && memberBtn) {
+      memberBtn.innerText = "👤 " + activeUser;
+    }
+  }
+
+  // Cek status login saat halaman pertama dimuat
+  document.addEventListener('DOMContentLoaded', checkActiveUser);
 </script>
 
 </body>
