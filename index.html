@@ -479,7 +479,7 @@
     document.getElementById('switchBtn').innerText = isRegisterMode ? "Login" : "Daftar Member";
   }
 
-  function handleAuth() {
+async function handleAuth() { 
     const user = document.getElementById('memberUser').value.trim();
     const pass = document.getElementById('memberPass').value.trim();
 
@@ -488,23 +488,36 @@
       return;
     }
 
-    if (isRegisterMode) {
-      // Simpan data pendaftaran ke LocalStorage
-      localStorage.setItem('boezan_user_' + user, pass);
-      alert("Pendaftaran berhasil! Silakan login dengan akun kamu.");
-      toggleAuthMode();
+if (isRegisterMode) {
+    // 1. Simpan Akun Baru ke Cloud Database Supabase
+    const { data, error } = await supabaseClient
+      .from('member')
+      .insert([{ username: user, password: pass }]);
+
+    if (error) {
+      alert("Gagal mendaftar: " + error.message);
     } else {
-      // Verifikasi Login dari LocalStorage
-      const savedPass = localStorage.getItem('boezan_user_' + user);
-      if (savedPass && savedPass === pass) {
-        localStorage.setItem('boezan_active_user', user);
-        alert("Selamat datang kembali, " + user + "!");
-        closeMemberModal();
-        checkActiveUser();
-      } else {
-        alert("Username atau Password salah / belum terdaftar!");
-      }
+      alert("Pendaftaran berhasil! Akun tersimpan di Cloud.");
+      toggleAuthMode();
     }
+  } else {
+    // 2. Cek Akun di Cloud Database Supabase
+    const { data, error } = await supabaseClient
+      .from('member')
+      .select('*')
+      .eq('username', user)
+      .eq('password', pass)
+      .maybeSingle();
+
+    if (data) {
+      localStorage.setItem('boezan_active_user', user);
+      alert("Selamat datang kembali, " + user + "!");
+      closeMemberModal();
+      checkActiveUser();
+    } else {
+      alert("Username atau Password salah / belum terdaftar!");
+    }
+  }
   }
 
   function checkActiveUser() {
