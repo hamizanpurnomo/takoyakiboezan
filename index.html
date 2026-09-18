@@ -419,30 +419,62 @@
       </div>
     </div>
 
-    <div style="margin-top:44px;">
-      <div class="section-head" style="text-align:left; margin-bottom:16px;">
-        <h2 style="font-size:24px;">🥤 Foto Minuman</h2>
+<div style="margin-top:44px;">
+  <div class="section-head" style="text-align:left; margin-bottom:16px;">
+    <h2 style="font-size:24px;">🥤 Foto Minuman</h2>
+  </div>
+  <div class="drink-photo-grid">
+    
+    <!-- Jeruk Peras -->
+    <div class="drink-photo-card">
+      <img src="drink_orange.jpg" alt="Jeruk Peras Takoyaki Boezan">
+      <div class="dp-label" style="display:flex; justify-content:space-between; align-items:center; padding:10px 12px;">
+        <span>Jeruk Peras - Rp5.000</span>
+        <button class="btn btn-primary" style="padding:5px 10px; font-size:11.5px;" onclick="addToCart('Jeruk Peras', 5000)">+ Tambah</button>
       </div>
-      <div class="drink-photo-grid">
-        <div class="drink-photo-card">
-          <img src="drink_orange.jpg" alt="Jeruk Peras Takoyaki Boezan">
-          <div class="dp-label">Jeruk Peras — Rp5.000</div>
+    </div>
+
+    <!-- Susu Jely Kurma -->
+    <div class="drink-photo-card">
+      <img src="drink_purple.jpg" alt="Susu Jely Kurma Takoyaki Boezan">
+      <div class="dp-label" style="display:flex; justify-content:space-between; align-items:center; padding:10px 12px;">
+        <span>Susu Jely Kurma - Rp5.000</span>
+        <button class="btn btn-primary" style="padding:5px 10px; font-size:11.5px;" onclick="addToCart('Susu Jely Kurma', 5000)">+ Tambah</button>
+      </div>
+    </div>
+
+    <!-- Green Tea -->
+    <div class="drink-photo-card">
+      <img src="drink_green.jpg" alt="Green Tea Takoyaki Boezan">
+      <div class="dp-label" style="display:flex; justify-content:space-between; align-items:center; padding:10px 12px;">
+        <div>
+          <div>Green Tea</div>
+          <small style="color:#6b5c4c;">Reg Rp3k / Jumbo Rp5k</small>
         </div>
-        <div class="drink-photo-card">
-          <img src="drink_purple.jpg" alt="Susu Jely Kurma Takoyaki Boezan">
-          <div class="dp-label">Susu Jely Kurma — Rp5.000</div>
-        </div>
-        <div class="drink-photo-card">
-          <img src="drink_green.jpg" alt="Green Tea Takoyaki Boezan">
-          <div class="dp-label">Green Tea — Rp3.000 / Rp5.000</div>
-        </div>
-        <div class="drink-photo-card">
-          <img src="es_teh.jpg" alt="Es Teh Takoyaki Boezan">
-          <div class="dp-label">Es Teh — Reguler Rp3.000 / Jumbo Rp5.000</div>
+        <div style="display:flex; gap:4px;">
+          <button class="btn btn-primary" style="padding:4px 8px; font-size:10.5px;" onclick="addToCart('Green Tea (Reguler)', 3000)">+ Reg</button>
+          <button class="btn btn-primary" style="padding:4px 8px; font-size:10.5px;" onclick="addToCart('Green Tea (Jumbo)', 5000)">+ Jumbo</button>
         </div>
       </div>
     </div>
 
+    <!-- Es Teh -->
+    <div class="drink-photo-card">
+      <img src="es_teh.jpg" alt="Es Teh Takoyaki Boezan">
+      <div class="dp-label" style="display:flex; justify-content:space-between; align-items:center; padding:10px 12px;">
+        <div>
+          <div>Es Teh</div>
+          <small style="color:#6b5c4c;">Reg Rp3k / Jumbo Rp5k</small>
+        </div>
+        <div style="display:flex; gap:4px;">
+          <button class="btn btn-primary" style="padding:4px 8px; font-size:10.5px;" onclick="addToCart('Es Teh (Reguler)', 3000)">+ Reg</button>
+          <button class="btn btn-primary" style="padding:4px 8px; font-size:10.5px;" onclick="addToCart('Es Teh (Jumbo)', 5000)">+ Jumbo</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
     <div style="margin-top:44px;">
       <div class="section-head" style="text-align:left; margin-bottom:0;">
         <h2 style="font-size:24px;">💳 Metode Pembayaran</h2>
