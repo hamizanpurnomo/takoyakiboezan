@@ -419,7 +419,7 @@
 
 <footer>Takoyaki Boezan · Since 2023 · Ds. Ciberem, Grumbul Bedahan</footer>
 
-  <!-- Modal Member Login & Register Lengkap -->
+<!-- Modal Member Login & Register Lengkap -->
 <div id="memberModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.65); z-index:100; align-items:center; justify-content:center; backdrop-filter:blur(3px);">
   <div style="background:var(--paper); padding:24px 20px; border-radius:18px; width:90%; max-width:380px; text-align:center; position:relative; box-shadow:var(--shadow); border:2px solid var(--orange); max-height:90vh; overflow-y:auto;">
     <button onclick="closeMemberModal()" style="position:absolute; top:12px; right:14px; border:none; background:none; font-size:20px; cursor:pointer; color:#7a6a58;">✕</button>
@@ -477,10 +477,10 @@
   </div>
 </div>
 
-<!-- 1. Load Pustaka Supabase TERLEBIH DAHULU -->
+<!-- 1. Panggil pustaka Supabase TERLEBIH DAHULU -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-<!-- 2. Inisialisasi Kunci Supabase & Logika Aplikasi -->
+<!-- 2. Inisialisasi Kunci API dan Logika Aplikasi -->
 <script>
   const SUPABASE_URL = 'https://syassxicixkyflfnuxdg.supabase.co';
   const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN5YXNzeGljaXhreWZsZm51eGRnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODk2NTg5ODMsImV4cCI6MjEwNTIzNDk4M30.Tm2cXAwJgwal_t59KAC9s0MfMpZSIdenxr4U2kQNNGY';
@@ -499,7 +499,7 @@
     });
   });
 
-  // ---------- Logika Member ----------
+  // ---------- Logika Member (Supabase & Logout) ----------
   let isRegisterMode = false;
 
   function openMemberModal() {
