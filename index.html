@@ -418,30 +418,91 @@
 </section>
 
 <footer>Takoyaki Boezan · Since 2023 · Ds. Ciberem, Grumbul Bedahan</footer>
-
-<!-- Modal Member Login & Register -->
+<!-- Modal Member Login & Register Lengkap -->
 <div id="memberModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.65); z-index:100; align-items:center; justify-content:center; backdrop-filter:blur(3px);">
-  <div style="background:var(--paper); padding:28px 24px; border-radius:18px; width:90%; max-width:340px; text-align:center; position:relative; box-shadow:var(--shadow); border:2px solid var(--orange);">
+  <div style="background:var(--paper); padding:24px 20px; border-radius:18px; width:90%; max-width:380px; text-align:center; position:relative; box-shadow:var(--shadow); border:2px solid var(--orange); max-height:90vh; overflow-y:auto;">
     <button onclick="closeMemberModal()" style="position:absolute; top:12px; right:14px; border:none; background:none; font-size:20px; cursor:pointer; color:#7a6a58;">✕</button>
     
     <h3 id="modalTitle" style="margin-bottom:6px; color:var(--ink); font-size:22px;">Login Member</h3>
-    <p style="font-size:13px; color:#6b5c4c; margin-bottom:18px;">Dapatkan keuntungan &amp; diskon khusus member Boezan!</p>
+    <p style="font-size:12.5px; color:#6b5c4c; margin-bottom:16px;">Dapatkan keuntungan & diskon khusus member Boezan!</p>
     
-    <div style="text-align:left; margin-bottom:12px;">
-      <label style="font-size:12px; font-weight:700; color:#5a4a3c; display:block; margin-bottom:4px;">Username</label>
-      <input type="text" id="memberUser" placeholder="Masukkan username" style="width:100%; padding:10px 12px; border-radius:8px; border:1.5px solid var(--line); font-size:14px; background:#fffaf0;">
+    <!-- Input Tambahan Khusus Registrasi -->
+    <div id="registerExtraFields" style="display:none;">
+      <div style="display:flex; gap:8px; margin-bottom:10px;">
+        <div style="flex:1; text-align:left;">
+          <label style="font-size:11.5px; font-weight:700; color:#5a4a3c; display:block; margin-bottom:4px;">Nama Depan *</label>
+          <input type="text" id="memberFirstName" placeholder="Nama depan" style="width:100%; padding:8px 10px; border-radius:8px; border:1.5px solid var(--line); font-size:13px; background:#fffaf0;">
+        </div>
+        <div style="flex:1; text-align:left;">
+          <label style="font-size:11.5px; font-weight:700; color:#5a4a3c; display:block; margin-bottom:4px;">Nama Belakang</label>
+          <input type="text" id="memberLastName" placeholder="Nama belakang" style="width:100%; padding:8px 10px; border-radius:8px; border:1.5px solid var(--line); font-size:13px; background:#fffaf0;">
+        </div>
+      </div>
+
+      <div style="text-align:left; margin-bottom:10px;">
+        <label style="font-size:11.5px; font-weight:700; color:#5a4a3c; display:block; margin-bottom:4px;">Nomor HP / WhatsApp *</label>
+        <input type="tel" id="memberPhone" placeholder="08xxxxxxxxxx" style="width:100%; padding:8px 10px; border-radius:8px; border:1.5px solid var(--line); font-size:13px; background:#fffaf0;">
+      </div>
+
+      <div style="text-align:left; margin-bottom:10px;">
+        <label style="font-size:11.5px; font-weight:700; color:#5a4a3c; display:block; margin-bottom:4px;">Email *</label>
+        <input type="email" id="memberEmail" placeholder="contoh@email.com" style="width:100%; padding:8px 10px; border-radius:8px; border:1.5px solid var(--line); font-size:13px; background:#fffaf0;">
+      </div>
+    </div>
+
+    <!-- Input Username & Password Utama -->
+    <div style="text-align:left; margin-bottom:10px;">
+      <label style="font-size:11.5px; font-weight:700; color:#5a4a3c; display:block; margin-bottom:4px;">Username *</label>
+      <input type="text" id="memberUser" placeholder="Masukkan username" style="width:100%; padding:8px 10px; border-radius:8px; border:1.5px solid var(--line); font-size:13px; background:#fffaf0;">
     </div>
     
-    <div style="text-align:left; margin-bottom:18px;">
-      <label style="font-size:12px; font-weight:700; color:#5a4a3c; display:block; margin-bottom:4px;">Password</label>
-      <input type="password" id="memberPass" placeholder="Masukkan password" style="width:100%; padding:10px 12px; border-radius:8px; border:1.5px solid var(--line); font-size:14px; background:#fffaf0;">
+    <div style="text-align:left; margin-bottom:10px;">
+      <label style="font-size:11.5px; font-weight:700; color:#5a4a3c; display:block; margin-bottom:4px;">Password *</label>
+      <input type="password" id="memberPass" placeholder="Masukkan password" style="width:100%; padding:8px 10px; border-radius:8px; border:1.5px solid var(--line); font-size:13px; background:#fffaf0;">
+    </div>
+
+    <!-- Verifikasi Password Khusus Registrasi -->
+    <div id="confirmPassField" style="display:none; text-align:left; margin-bottom:14px;">
+      <label style="font-size:11.5px; font-weight:700; color:#5a4a3c; display:block; margin-bottom:4px;">Konfirmasi Password *</label>
+      <input type="password" id="memberPassConfirm" placeholder="Ulangi password" style="width:100%; padding:8px 10px; border-radius:8px; border:1.5px solid var(--line); font-size:13px; background:#fffaf0;">
     </div>
     
-    <button onclick="handleAuth()" id="authBtn" class="btn btn-primary" style="width:100%; justify-content:center; padding:11px;">Masuk Sekarang</button>
+    <button onclick="handleAuth()" id="authBtn" class="btn btn-primary" style="width:100%; justify-content:center; padding:10px; margin-top:6px;">Masuk Sekarang</button>
     
-    <div style="font-size:12.5px; margin-top:16px; color:#6b5c4c;">
+    <div style="font-size:12px; margin-top:14px; color:#6b5c4c;">
       <span id="switchText">Belum punya akun?</span> 
       <a href="javascript:void(0)" onclick="toggleAuthMode()" id="switchBtn" style="color:var(--orange); font-weight:700; text-decoration:none; margin-left:4px;">Daftar Member</a>
+    </div>
+  </div>
+</div>
+      <div style="text-align:left; margin-bottom:12px;">
+        <label style="font-size:12px; font-weight:700; color:#5a4a3c; display:block; margin-bottom:4px;">Email</label>
+        <input type="email" id="memberEmail" placeholder="email@contoh.com" style="width:100%; padding:10px; border-radius:8px; border:1px solid #ccc; box-sizing:border-box;">
+      </div>
+    </div>
+
+    <!-- Field Utama -->
+    <div style="text-align:left; margin-bottom:12px;">
+      <label style="font-size:12px; font-weight:700; color:#5a4a3c; display:block; margin-bottom:4px;">Username</label>
+      <input type="text" id="memberUser" placeholder="Masukkan username" style="width:100%; padding:10px; border-radius:8px; border:1px solid #ccc; box-sizing:border-box;">
+    </div>
+
+    <div style="text-align:left; margin-bottom:12px;">
+      <label style="font-size:12px; font-weight:700; color:#5a4a3c; display:block; margin-bottom:4px;">Password</label>
+      <input type="password" id="memberPass" placeholder="Masukkan password" style="width:100%; padding:10px; border-radius:8px; border:1px solid #ccc; box-sizing:border-box;">
+    </div>
+
+    <!-- Field Konfirmasi Password -->
+    <div id="confirmPassField" style="text-align:left; margin-bottom:18px; display:none;">
+      <label style="font-size:12px; font-weight:700; color:#5a4a3c; display:block; margin-bottom:4px;">Konfirmasi Password</label>
+      <input type="password" id="memberPassConfirm" placeholder="Ulangi password" style="width:100%; padding:10px; border-radius:8px; border:1px solid #ccc; box-sizing:border-box;">
+    </div>
+
+    <button onclick="handleAuth()" id="authBtn" class="btn btn-primary" style="width:100%; justify-content:center; padding:11px; margin-top:6px;">Masuk Sekarang</button>
+
+    <div style="font-size:12.5px; margin-top:16px; color:#6b5c4c;">
+      <span id="switchText">Belum punya akun?</span>
+      <a href="javascript:void(0)" onclick="toggleAuthMode()" id="switchBtn" style="color:var(--orange, #e65100); font-weight:700; text-decoration:none;">Daftar Member</a>
     </div>
   </div>
 </div>
