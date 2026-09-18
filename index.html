@@ -527,14 +527,19 @@ if (isRegisterMode) {
       memberBtn.innerText = "👤 " + activeUser;
     }
   }
-
-  // Cek status login saat halaman pertama dimuat
-  document.addEventListener('DOMContentLoaded', checkActiveUser);
-const SUPABASE_URL = 'https://syassxicixkyflfnuxdg.supabase.co';
-const SUPABASE_KEY = 'sb_publishable_JBxWML8nd166APINl0fIUw_vCdrJ...';
-const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+// Cek status login saat halaman pertama dimuat
+document.addEventListener('DOMContentLoaded', checkActiveUser);
 </script>
 
+<!-- 1. Panggil pustaka Supabase TERLEBIH DAHULU di sini -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<!-- 2. Baru inisialisasi kunci API di dalam script terpisah -->
+<script>
+  const SUPABASE_URL = 'https://syassxicixkyflfnuxdg.supabase.co';
+  const SUPABASE_KEY = 'sb_publishable_JBxWML8nd166APINl0fIUw_vCdrJ...'; // Masukkan kunci anon kamu di sini
+  const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+</script>
+
 </body>
 </html>
