@@ -419,7 +419,7 @@
 
 <footer>Takoyaki Boezan · Since 2023 · Ds. Ciberem, Grumbul Bedahan</footer>
 
-<!-- Modal Member Login & Register Lengkap -->
+  <!-- Modal Member Login & Register Lengkap -->
 <div id="memberModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.65); z-index:100; align-items:center; justify-content:center; backdrop-filter:blur(3px);">
   <div style="background:var(--paper); padding:24px 20px; border-radius:18px; width:90%; max-width:380px; text-align:center; position:relative; box-shadow:var(--shadow); border:2px solid var(--orange); max-height:90vh; overflow-y:auto;">
     <button onclick="closeMemberModal()" style="position:absolute; top:12px; right:14px; border:none; background:none; font-size:20px; cursor:pointer; color:#7a6a58;">✕</button>
@@ -476,22 +476,16 @@
     </div>
   </div>
 </div>
-    <!-- Field Konfirmasi Password -->
-    <div id="confirmPassField" style="text-align:left; margin-bottom:18px; display:none;">
-      <label style="font-size:12px; font-weight:700; color:#5a4a3c; display:block; margin-bottom:4px;">Konfirmasi Password</label>
-      <input type="password" id="memberPassConfirm" placeholder="Ulangi password" style="width:100%; padding:10px; border-radius:8px; border:1px solid #ccc; box-sizing:border-box;">
-    </div>
 
-    <button onclick="handleAuth()" id="authBtn" class="btn btn-primary" style="width:100%; justify-content:center; padding:11px; margin-top:6px;">Masuk Sekarang</button>
+<!-- 1. Load Pustaka Supabase TERLEBIH DAHULU -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-    <div style="font-size:12.5px; margin-top:16px; color:#6b5c4c;">
-      <span id="switchText">Belum punya akun?</span>
-      <a href="javascript:void(0)" onclick="toggleAuthMode()" id="switchBtn" style="color:var(--orange, #e65100); font-weight:700; text-decoration:none;">Daftar Member</a>
-    </div>
-  </div>
-</div>
-
+<!-- 2. Inisialisasi Kunci Supabase & Logika Aplikasi -->
 <script>
+  const SUPABASE_URL = 'https://syassxicixkyflfnuxdg.supabase.co';
+  const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN5YXNzeGljaXhreWZsZm51eGRnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODk2NTg5ODMsImV4cCI6MjEwNTIzNDk4M30.Tm2cXAwJgwal_t59KAC9s0MfMpZSIdenxr4U2kQNNGY';
+  const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
   // ---------- Navigation ----------
   function goPage(id){
     document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
@@ -505,7 +499,7 @@
     });
   });
 
-  // ---------- Logika Member (LocalStorage) ----------
+  // ---------- Logika Member ----------
   let isRegisterMode = false;
 
   function openMemberModal() {
@@ -518,13 +512,17 @@
 
   function toggleAuthMode() {
     isRegisterMode = !isRegisterMode;
+    
+    document.getElementById('registerExtraFields').style.display = isRegisterMode ? 'block' : 'none';
+    document.getElementById('confirmPassField').style.display = isRegisterMode ? 'block' : 'none';
+    
     document.getElementById('modalTitle').innerText = isRegisterMode ? "Daftar Member Baru" : "Login Member Boezan";
     document.getElementById('authBtn').innerText = isRegisterMode ? "Daftar Sekarang" : "Masuk Sekarang";
     document.getElementById('switchText').innerText = isRegisterMode ? "Sudah punya akun?" : "Belum punya akun?";
     document.getElementById('switchBtn').innerText = isRegisterMode ? "Login" : "Daftar Member";
   }
 
-async function handleAuth() { 
+  async function handleAuth() {
     const user = document.getElementById('memberUser').value.trim();
     const pass = document.getElementById('memberPass').value.trim();
 
@@ -533,57 +531,81 @@ async function handleAuth() {
       return;
     }
 
-if (isRegisterMode) {
-    // 1. Simpan Akun Baru ke Cloud Database Supabase
-    const { data, error } = await supabaseClient
-      .from('member')
-      .insert([{ username: user, password: pass }]);
+    if (isRegisterMode) {
+      const firstName = document.getElementById('memberFirstName').value.trim();
+      const lastName = document.getElementById('memberLastName').value.trim();
+      const phone = document.getElementById('memberPhone').value.trim();
+      const email = document.getElementById('memberEmail').value.trim();
+      const passConfirm = document.getElementById('memberPassConfirm').value.trim();
 
-    if (error) {
-      alert("Gagal mendaftar: " + error.message);
-    } else {
-      alert("Pendaftaran berhasil! Akun tersimpan di Cloud.");
-      toggleAuthMode();
-    }
-  } else {
-    // 2. Cek Akun di Cloud Database Supabase
-    const { data, error } = await supabaseClient
-      .from('member')
-      .select('*')
-      .eq('username', user)
-      .eq('password', pass)
-      .maybeSingle();
+      if (!firstName || !phone || !email) {
+        alert("Mohon lengkapi Nama Depan, Nomor HP, dan Email!");
+        return;
+      }
 
-    if (data) {
-      localStorage.setItem('boezan_active_user', user);
-      alert("Selamat datang kembali, " + user + "!");
-      closeMemberModal();
-      checkActiveUser();
+      if (pass !== passConfirm) {
+        alert("Konfirmasi password tidak cocok! Silakan periksa kembali.");
+        return;
+      }
+
+      const { data, error } = await supabaseClient
+        .from('member')
+        .insert([{
+          username: user,
+          password: pass,
+          first_name: firstName,
+          last_name: lastName,
+          phone: phone,
+          email: email
+        }]);
+
+      if (error) {
+        alert("Gagal mendaftar: " + error.message);
+      } else {
+        alert("Pendaftaran berhasil! Akun tersimpan di Cloud.");
+        toggleAuthMode();
+      }
     } else {
-      alert("Username atau Password salah / belum terdaftar!");
+      const { data, error } = await supabaseClient
+        .from('member')
+        .select('*')
+        .eq('username', user)
+        .eq('password', pass)
+        .maybeSingle();
+
+      if (data) {
+        localStorage.setItem('boezan_active_user', user);
+        alert("Selamat datang kembali, " + user + "!");
+        closeMemberModal();
+        checkActiveUser();
+      } else {
+        alert("Username atau Password salah / belum terdaftar!");
+      }
     }
-  }
   }
 
   function checkActiveUser() {
     const activeUser = localStorage.getItem('boezan_active_user');
     const memberBtn = document.querySelector('button[onclick="openMemberModal()"]');
+
     if (activeUser && memberBtn) {
-      memberBtn.innerText = "👤 " + activeUser;
+      memberBtn.innerHTML = `👤 ${activeUser} <span onclick="handleLogout(event)" style="margin-left:8px; color:#ff4d4d; font-weight:bold; cursor:pointer;" title="Logout">✕ (Keluar)</span>`;
+    } else if (memberBtn) {
+      memberBtn.innerText = "👤 Member";
     }
   }
 
-document.addEventListener('DOMContentLoaded', checkActiveUser);
-</script>
+  function handleLogout(event) {
+    if (event) event.stopPropagation();
 
-<!-- 1. Panggil pustaka Supabase TERLEBIH DAHULU di sini -->
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    if (confirm("Apakah Anda yakin ingin keluar dari akun member?")) {
+      localStorage.removeItem('boezan_active_user');
+      alert("Anda telah berhasil keluar.");
+      checkActiveUser();
+    }
+  }
 
-<!-- 2. Baru inisialisasi kunci API di dalam script terpisah -->
-<script>
-  const SUPABASE_URL = 'https://syassxicixkyflfnuxdg.supabase.co';
-  const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN5YXNzeGljaXhreWZsZm51eGRnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODk2NTg5ODMsImV4cCI6MjEwNTIzNDk4M30.Tm2cXAwJgwal_t59KAC9s0MfMpZSIdenxr4U2kQNNGY';
-  const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+  document.addEventListener('DOMContentLoaded', checkActiveUser);
 </script>
 
 </body>
