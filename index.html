@@ -784,23 +784,22 @@
     document.getElementById('switchBtn').innerText = isRegisterMode ? "Login" : "Daftar Member";
   }
 
-  async function handleAuth() {
-    const email = document.getElementById('memberEmail')?.value.trim() || document.getElementById('memberUser')?.value.trim();
+ async function handleAuth() {
+    // Ambil data Email dan Password
+    const email = document.getElementById('memberEmail')?.value.trim();
+    const username = document.getElementById('memberUser')?.value.trim();
     const pass = document.getElementById('memberPass').value.trim();
 
-    if (!email || !pass) {
-      alert("Mohon isi Email/Username dan Password!");
-      return;
-    }
-
     if (isRegisterMode) {
+      // PROSES PENDAFTARAN (REGISTER)
       const firstName = document.getElementById('memberFirstName').value.trim();
       const lastName = document.getElementById('memberLastName').value.trim();
       const phone = document.getElementById('memberPhone').value.trim();
       const passConfirm = document.getElementById('memberPassConfirm').value.trim();
 
-      if (!firstName || !phone) {
-        alert("Mohon lengkapi Nama Depan dan Nomor HP!");
+      // Pastikan semua kolom wajib diisi
+      if (!firstName || !phone || !email || !username || !pass) {
+        alert("Mohon lengkapi semua kolom yang bertanda bintang (*).");
         return;
       }
 
@@ -809,7 +808,7 @@
         return;
       }
 
-      // Mendaftar menggunakan fitur resmi Supabase (Password otomatis dienkripsi secara aman)
+      // Mendaftar ke Supabase
       const { data, error } = await supabaseClient.auth.signUp({
         email: email,
         password: pass,
@@ -817,7 +816,8 @@
           data: {
             first_name: firstName,
             last_name: lastName,
-            phone: phone
+            phone: phone,
+            username: username
           }
         }
       });
@@ -825,13 +825,27 @@
       if (error) {
         alert("Gagal mendaftar: " + error.message);
       } else {
-        alert("Pendaftaran berhasil! Akun Anda telah tersimpan secara aman.");
+        alert("Pendaftaran berhasil! Silakan masuk (login) dengan email Anda.");
         toggleAuthMode();
       }
     } else {
-      // Login menggunakan Supabase Auth
+      // PROSES LOGIN
+      const loginIdentifier = email || username; // Bisa pakai email atau username dari form
+      
+      if (!loginIdentifier || !pass) {
+        alert("Mohon isi Email/Username dan Password!");
+        return;
+      }
+
+      // Supabase Auth bawaan default-nya butuh Email untuk login.
+      // Pastikan pengguna memasukkan alamat email yang valid saat login.
+      if (!loginIdentifier.includes('@')) {
+         alert("Mohon login menggunakan Alamat Email yang sudah didaftarkan, bukan Username.");
+         return;
+      }
+
       const { data, error } = await supabaseClient.auth.signInWithPassword({
-        email: email,
+        email: loginIdentifier,
         password: pass
       });
 
