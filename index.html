@@ -685,11 +685,14 @@
     updateCartUI();
   }
 
-  function renderCartItems() {
+function renderCartItems() {
     const container = document.getElementById('cartList');
     const totalSpan = document.getElementById('cartTotal');
     let html = '';
-    let grandTotal = 0;
+    let subTotal = 0;
+    
+    // Batas minimal belanja untuk dapat diskon
+    const minBelanjaDiskon = 50000; 
 
     if (window.cart.length === 0) {
       container.innerHTML = '<p style="font-size:13px; color:#6b5c4c; text-align:center;">Keranjang masih kosong.</p>';
@@ -698,13 +701,13 @@
     }
 
     window.cart.forEach((item, index) => {
-      const subtotal = item.price * item.qty;
-      grandTotal += subtotal;
+      const itemTotal = item.price * item.qty;
+      subTotal += itemTotal;
       html += `
         <div class="cart-item">
           <div>
             <div class="cart-item-title">${item.name}</div>
-            <div class="cart-item-sub">Rp${item.price.toLocaleString()} x ${item.qty} = <b>Rp${subtotal.toLocaleString()}</b></div>
+            <div class="cart-item-sub">Rp${item.price.toLocaleString()} x ${item.qty} = <b>Rp${itemTotal.toLocaleString()}</b></div>
           </div>
           <div style="display:flex; gap:6px; align-items:center;">
             <button class="cart-qty-btn" onclick="changeQty(${index}, -1)">-</button>
@@ -715,11 +718,42 @@
       `;
     });
 
+    let grandTotal = subTotal;
+
+    // CEK DISKON 5% HANYA JIKA MEMBER LOGIN DAN BELANJA >= Rp 50.000
+    if (isMemberLoggedIn) {
+      if (subTotal >= minBelanjaDiskon) {
+        const discount = subTotal * 0.05; // Diskon 5%
+        grandTotal = subTotal - discount;
+        
+        html += `
+          <div style="display:flex; justify-content:space-between; align-items:center; padding:10px 0; font-size:14px; color:var(--orange-deep); font-weight:700; border-bottom:1px dashed var(--line);">
+            <span>🎉 Diskon Member 5%</span>
+            <span>- Rp${discount.toLocaleString()}</span>
+          </div>
+        `;
+      } else {
+        // Jika belum mencapai minimal belanja, tampilkan pesan penyemangat
+        const kurang = minBelanjaDiskon - subTotal;
+        html += `
+          <div style="text-align:center; padding:10px 0; font-size:12px; color:#5a4a1f; background:var(--yellow); border-radius:8px; margin-top:8px;">
+            Kurang <b>Rp${kurang.toLocaleString()}</b> lagi untuk dapat Diskon Member 5%!
+          </div>
+        `;
+      }
+    } else {
+       // Pesan untuk tamu yang belum login
+       html += `
+          <div style="text-align:center; padding:10px 0; font-size:12px; color:#5a4a1f; background:var(--yellow); border-radius:8px; margin-top:8px; cursor:pointer;" onclick="closeCartModal(); openMemberModal();">
+            <span style="text-decoration:underline;">Login sebagai Member</span> untuk promo menarik!
+          </div>
+        `;
+    }
+
     container.innerHTML = html;
     totalSpan.innerText = 'Rp' + grandTotal.toLocaleString();
   }
-
-  function sendWaOrder() {
+function sendWaOrder() {
     const name = document.getElementById('customerName').value.trim();
     if (!name) {
       alert("Mohon isi nama pemesan terlebih dahulu!");
@@ -731,18 +765,31 @@
     }
 
     let text = `*HALO TAKOYAKI BOEZAN, SAYA MAU PESAN*\n`;
-    text += `Nama Pemesan: *${name}*\n\n`;
+    text += `Nama Pemesan: *${name}* ${isMemberLoggedIn ? '(👑 Member)' : ''}\n\n`;
     text += `*Rincian Pesanan:*\n`;
 
-    let grandTotal = 0;
+    let subTotal = 0;
+    const minBelanjaDiskon = 50000;
+
     window.cart.forEach((item, i) => {
       const sub = item.price * item.qty;
-      grandTotal += sub;
+      subTotal += sub;
       text += `${i + 1}. ${item.name} (${item.qty}x) = Rp${sub.toLocaleString()}\n`;
     });
 
+    let grandTotal = subTotal;
+
+    // FORMAT WA UNTUK DISKON BERSYARAT
+    if (isMemberLoggedIn && subTotal >= minBelanjaDiskon) {
+      const discount = subTotal * 0.05; 
+      grandTotal = subTotal - discount;
+      
+      text += `\n*Subtotal:* Rp${subTotal.toLocaleString()}`;
+      text += `\n*Diskon Member (5%):* -Rp${discount.toLocaleString()}`;
+    }
+
     text += `\n*Total Pembayaran:* Rp${grandTotal.toLocaleString()}\n`;
-    text += `Mohon diproses ya, terima kasih!`;
+    text += `\nMohon diproses ya, terima kasih!`;
 
     const url = "https://wa.me/6281286311004?text=" + encodeURIComponent(text);
     window.open(url, '_blank');
